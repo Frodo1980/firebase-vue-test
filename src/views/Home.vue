@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld
+      msg="Ich bin ein Text, der als Prop an die HelloWorld-Komponente übergeben wurde"
+    />
   </div>
 </template>
 
