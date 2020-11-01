@@ -45,6 +45,7 @@ new Vue({
 }).$mount("#app");
 ```
 5. Vuetify mit `vue add vuetify` hinzufügen
+6. `vue add prerender-spa` um Prerendering für SEO zu implementierten
 
 ## Project setup
 

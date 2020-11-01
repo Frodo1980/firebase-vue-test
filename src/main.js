@@ -16,7 +16,6 @@ new Vue({
   router,
 
   created: function() {
-    alert('Created-Lifecycle-Hook wird ausgeführt')
     const firebaseConfig = {
       apiKey: 'AIzaSyBGm-VFXIZpcNJbZVxslCN9tIWmJ7iM73w',
       authDomain: 'vue-testapp-5f009.firebaseapp.com',
