@@ -9,11 +9,15 @@ import firebase from 'firebase/app'
 // Add the Firebase services that you want to use
 import 'firebase/auth'
 import 'firebase/firestore'
+import vuetify from './plugins/vuetify'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import '@mdi/font/css/materialdesignicons.css'
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
+
   created: function() {
     alert('Created-Lifecycle-Hook wird ausgeführt')
     const firebaseConfig = {
@@ -30,5 +34,7 @@ new Vue({
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig)
   },
+
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

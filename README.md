@@ -44,6 +44,7 @@ new Vue({
   render: (h) => h(App),
 }).$mount("#app");
 ```
+5. Vuetify mit `vue add vuetify` hinzufügen
 
 ## Project setup
 
