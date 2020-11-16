@@ -54,6 +54,8 @@
         Zurücksetzen
       </v-btn>
     </v-form>
+    Nutzer: {{ Benutzer.Name }} UID: {{ Benutzer.Nummer }} Mail:
+    {{ Benutzer.NutzerMail }}
   </v-container>
 </template>
 
@@ -63,6 +65,11 @@ import 'firebase/auth'
 
 export default {
   data: () => ({
+    Benutzer: {
+      Name: 'Kein Name',
+      Nummer: 'keine UID',
+      NutzerMail: 'keine Mailadresse'
+    },
     valid: true,
     name: '',
     nameRules: [
@@ -86,7 +93,7 @@ export default {
     }
   }),
 
-  methods: {
+  _methods: {
     validate() {
       this.$refs.form.validate()
 
@@ -95,12 +102,35 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.confirmedPassword)
+          .then(user => console.log('Hier:', user))
+
           .catch(err => console.error(err))
       }
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          console.log('eingeloggt')
+          this.Benutzer = {
+            Name: user.displayName,
+            Nummer: user.uid,
+            NutzerMail: user.email
+          }
+        } else {
+          // No user is signed in.
+          console.log('Nö, nicht eingeloggt')
+        }
+      })
     },
     reset() {
       this.$refs.form.reset()
     }
+  },
+  get methods() {
+    return this._methods
+  },
+  set methods(value) {
+    this._methods = value
   },
   computed: {
     comparePassword() {
