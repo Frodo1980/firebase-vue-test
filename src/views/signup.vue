@@ -70,6 +70,7 @@ export default {
       Nummer: 'keine UID',
       NutzerMail: 'keine Mailadresse'
     },
+
     valid: true,
     name: '',
     nameRules: [
@@ -93,7 +94,7 @@ export default {
     }
   }),
 
-  _methods: {
+  methods: {
     validate() {
       this.$refs.form.validate()
 
@@ -102,7 +103,26 @@ export default {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.confirmedPassword)
-          .then(user => console.log('Hier:', user))
+          .then(user => {
+            console.log(user)
+            this.Benutzer.Name = user.user.displayName
+            this.Benutzer.NutzerMail = user.user.email
+            this.Benutzer.Nummer = user.user.uid
+            this.Benutzer.Name = this.name
+            var currentuser = firebase.auth().currentUser
+            currentuser
+              .updateProfile({
+                displayName: this.name
+              })
+              .then(function(user) {
+                // Update successful.
+                console.log(user)
+              })
+              .catch(function(error) {
+                // An error happened.
+                console.log(error)
+              })
+          })
 
           .catch(err => console.error(err))
       }
@@ -111,11 +131,6 @@ export default {
         if (user) {
           // User is signed in.
           console.log('eingeloggt')
-          this.Benutzer = {
-            Name: user.displayName,
-            Nummer: user.uid,
-            NutzerMail: user.email
-          }
         } else {
           // No user is signed in.
           console.log('Nö, nicht eingeloggt')
@@ -125,12 +140,6 @@ export default {
     reset() {
       this.$refs.form.reset()
     }
-  },
-  get methods() {
-    return this._methods
-  },
-  set methods(value) {
-    this._methods = value
   },
   computed: {
     comparePassword() {
