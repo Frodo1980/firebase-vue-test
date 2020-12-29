@@ -56,6 +56,10 @@
     </v-form>
     Nutzer: {{ Benutzer.Name }} UID: {{ Benutzer.Nummer }} Mail:
     {{ Benutzer.NutzerMail }}
+
+    <v-btn color="error" class="mr-4" @click="datenSpeichern">
+      Daten speichern
+    </v-btn>
   </v-container>
 </template>
 
@@ -95,6 +99,16 @@ export default {
   }),
 
   methods: {
+    async datenSpeichern() {
+      const db = firebase.firestore()
+      const docRef = db.collection('users').doc('alovelace')
+
+      await docRef.set({
+        first: 'Michael',
+        last: 'Lüssem',
+        born: 1980
+      })
+    },
     validate() {
       this.$refs.form.validate()
 

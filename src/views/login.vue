@@ -25,36 +25,32 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
 export default {
   data: () => ({
-    valid: true,
-    name: '',
-    nameRules: [
-      v => !!v || 'Bitte geben Sie einen Namen an',
-      v => (v && v.length <= 20) || 'der Name darf max. 20 Zeichen lang sein'
-    ],
-    email: '',
+    password: '',
 
-    emailRules: [
-      v => !!v || 'E-mail bitte eingeben',
-      v => /.+@.+\..+/.test(v) || 'E-mail ungültig'
-    ],
-    checkbox: false,
-    show: false,
-    password: 'Password',
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: password => (password == this.password ? true : false)
-    }
+    email: ''
   }),
 
   methods: {
-    validate() {
-      this.$refs.form.validate()
-    },
-    reset() {
-      this.$refs.form.reset()
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          // Signed in
+          console.log(user)
+        })
+        .catch(error => {
+          var errorCode = error.code
+          var errorMessage = error.message
+
+          console.log(errorCode)
+          console.log(errorMessage)
+        })
     }
   }
 }
