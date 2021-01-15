@@ -3,12 +3,12 @@
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="Imkerei Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          src="./assets/logo.png"
           transition="scale-transition"
-          width="40"
+          width="150"
         />
 
         <v-img
@@ -23,13 +23,9 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn @click="logout" text>
+        <span class="mr-2">Logout</span>
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -37,13 +33,17 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
       <router-link to="/login">Login</router-link>|
-      <router-link to="/signup">SignUp</router-link>
+      <router-link to="/signup">SignUp</router-link>|
+      <router-link to="/testseite">Testseite</router-link>
       <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
 export default {
   name: 'App',
 
@@ -51,6 +51,21 @@ export default {
 
   data: () => ({
     //
-  })
+  }),
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(function() {
+          // Sign-out successful.
+          alert('Sie wurden erfolgreich ausgeloggt!')
+        })
+        .catch(function(error) {
+          // An error happened.
+          alert(error.message)
+        })
+    }
+  }
 }
 </script>
